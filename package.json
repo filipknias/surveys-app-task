@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "nanoid": "^5.0.7",
     "nuxt": "^3.12.4",
+    "nuxt-mongoose": "^1.0.6",
     "vue": "latest"
   },
   "devDependencies": {
+    "@types/nanoid": "^3.0.0",
     "typescript": "^5.5.4",
     "vue-tsc": "^1.8.27"
   }
