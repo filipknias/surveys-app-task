@@ -1,6 +1,14 @@
-type RequestStatus = "success" | "fail";
-
 export type SurveysPostRequest = {
-    status: RequestStatus;
     id: string;
+}
+
+export type RequestFail = {
+    url: string;
+    statusCode: number;
+    statusMessage: string;
+    message: string;
+    stack: string; 
+    data: {
+        path: string;
+    };
 }

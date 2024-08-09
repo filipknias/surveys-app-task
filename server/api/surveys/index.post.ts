@@ -8,10 +8,7 @@ export default defineEventHandler(async (event) => {
         });
         await newSurvey.save();
 
-        return { 
-            status: "success",
-            id: newSurvey._id, 
-        }
+        return { id: newSurvey._id };
     } catch (err) {
         console.error(err);
     }

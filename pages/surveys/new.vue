@@ -29,6 +29,11 @@
                 </button>
             </div>
         </div>
+        <div v-if="error" class="bg-red-200 rounded-lg px-8 py-4 mb-8">
+            <h1 class="text-red-500 text-xl">
+                {{ error.statusMessage }} ({{ error.statusCode }}). Please try again
+            </h1>
+        </div>
         <div class="flex flex-wrap gap-4">
             <button @click="addAnswer" :disabled="loading" type="button" class="bg-green-500 hover:bg-green-600 transition duration-200 text-white text-center rounded-lg px-8 py-2 disabled:bg-opacity-50">Add answer</button>
             <button :disabled="loading" type="submit" class="bg-blue-500 hover:bg-blue-600 transition duration-200 text-white text-center rounded-lg px-8 py-2 disabled:bg-opacity-50">Submit survey</button>
@@ -39,7 +44,7 @@
 
 <script lang="ts" setup>
     import { nanoid } from 'nanoid';
-    import type { SurveysPostRequest } from '~/types/api'
+    import type { SurveysPostRequest, RequestFail } from '~/types/api'
 
     const initialAnswers = [
         { id: nanoid(), name: "" },
@@ -49,6 +54,7 @@
     const answers = ref<{ id: string, name: string }[]>(initialAnswers);
     const name = ref<string>("");
     const loading = ref<boolean>(false);
+    const error = ref<RequestFail|null>(null);
 
     async function onSubmit() {
         try {
@@ -64,7 +70,8 @@
             await navigateTo(`/surveys/${surveyRequest.id}`);
 
         } catch (err) {
-            console.log(err);
+            const serverError = err as RequestFail;
+            error.value = serverError;
         } finally {
             loading.value = false;
         }
