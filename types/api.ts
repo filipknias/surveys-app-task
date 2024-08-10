@@ -12,3 +12,11 @@ export type RequestFail = {
         path: string;
     };
 }
+
+export type Survey = {
+    _id: string;
+    name: string;
+    answers: { id: string; name: string }[];
+    closed_at: Date|null;
+    status: string;
+}

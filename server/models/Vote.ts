@@ -12,8 +12,8 @@ export const Vote = defineMongooseModel({
         type: mongoose.Schema.ObjectId,
         required: true,
     },
-    answer: {
-        type: 'string',
+    answers: {
+        type: Array,
         required: true,
     },
   },

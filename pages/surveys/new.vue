@@ -68,7 +68,6 @@
             });
             
             await navigateTo(`/surveys/${surveyRequest.id}`);
-
         } catch (err) {
             const serverError = err as RequestFail;
             error.value = serverError;
