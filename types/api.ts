@@ -1,5 +1,16 @@
+type Pagination = {
+    currentPage: number,
+    pageLimit: number,
+    totalPages: number,
+}
+
 export type SurveysPostRequest = {
     id: string;
+}
+
+export type SurveysGetRequest = {
+   surveys: Survey[];
+   pagination: Pagination;
 }
 
 export type RequestFail = {
