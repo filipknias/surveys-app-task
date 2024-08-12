@@ -9,8 +9,15 @@ export default defineEventHandler(async (event) => {
         const totalPages = Math.ceil(totalCount / (pageLimit as number));
 
         if (name) {
-            const surveysByName = await Survey.find({ name }).exec();
-            return surveysByName;
+            const surveysByName = await Survey.find({ name: new RegExp(name as string, 'i') }).skip(offset).limit(pageLimit as number).exec();
+            return {
+                surveys: surveysByName,
+                pagination: {
+                    currentPage,
+                    pageLimit,
+                    totalPages,
+                },
+            };
         }
 
         const surveys = await Survey.find().skip(offset).limit(pageLimit as number).exec();

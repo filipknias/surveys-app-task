@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
     "ip": "^2.0.1",
+    "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
     "nuxt": "^3.12.4",
     "nuxt-mongoose": "^1.0.6",
