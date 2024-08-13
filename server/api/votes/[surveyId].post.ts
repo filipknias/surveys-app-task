@@ -9,23 +9,21 @@ export default defineEventHandler(async (event) => {
         const votesWithIp = await Vote.find({ survey_id: surveyId, ip_address: ipAddress });
 
         if (votesWithIp.length > 0) {
-            // return new Error('This survey is arleady submitted.');
             return createError({
                 statusCode: 403,
                 statusMessage: 'This survey is arleady submitted.'
             });
         }
 
-        body.answers.forEach(async (answer: { id: string, value: string, name: string }) => {
+        body.answers.forEach(async (answer: { questionId: string, name: string, answerId: string }) => {
             const newVote = new Vote({ 
-                answers: answer.value,
+                answer_id: answer.answerId,
+                question_id: answer.questionId,
                 survey_id: surveyId,
                 ip_address: ipAddress,
             });
             await newVote.save();
         });
-
-        
 
         return { status: "OK" };
     } catch (err) {

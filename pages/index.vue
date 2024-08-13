@@ -40,12 +40,16 @@
     const router = useRouter()
     const PER_PAGE = 3;
     const name = ref("");
-    const query = computed(() => ({ page: route.query.page, per_page: PER_PAGE, name: route.query.name }));
+    const query = computed(() => ({ 
+        page: route.query.page, 
+        per_page: PER_PAGE, 
+        name: route.query.name 
+    }));
 
     const { data, error } = await useFetch<SurveysGetRequest>('/api/surveys', { query });
     
     async function handlePageChange(page: number) {
-        navigateTo({ 
+        await navigateTo({ 
             path: "/", 
             query: { page, name: route.query.name },
         });

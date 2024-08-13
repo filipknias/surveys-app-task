@@ -31,3 +31,19 @@ export type Survey = {
     closed_at: Date|null;
     status: string;
 }
+
+export type QuestionAnswer = {
+    id: string, 
+    name: string,
+}
+
+export type Question = {
+    id: string;
+    name: string,
+    answers: QuestionAnswer[],
+}
+
+export type SurveyIdGetRequest = {
+    survey: Survey;
+    questions: Question[];
+}

@@ -7,10 +7,6 @@ export const Survey = defineMongooseModel({
       type: 'string',
       required: true,
     },
-    answers: {
-        type: Array,
-        required: true,
-    },
     closed_at: {
         type: Date,
         default: null,
