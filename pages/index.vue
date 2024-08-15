@@ -15,17 +15,12 @@
             </div>
             <div class="flex flex-wrap -m-4 mb-12">
                 <div class="w-full lg:w-1/3 p-4" v-for="survey in data.surveys" :key="survey._id">
-                    <NuxtLink :to="`/surveys/${survey._id}`">
-                        <div class="border border-gray-200 rounded-lg p-4 group">
-                            <div class="flex items-center justify-between flex-wrap mb-4">
-                                <h2 class="text-2xl font-semibold group-hover:underline">{{ survey.name }}</h2>
-                                <div class="text-white py-2 px-4 rounded-lg bg-green-500">{{ survey.status }}</div>
-                            </div>
-                            <p class="font-medium text-lg">
-                                {{ votesCount[survey._id] !== undefined ? votesCount[survey._id] : survey.votesCount }} Votes
-                            </p>
-                        </div>
-                    </NuxtLink>
+                    <SurveyCard
+                        :id="survey._id"
+                        :name="survey.name"
+                        :status="survey.status"
+                        :votesCount="votesCount[survey._id] !== undefined ? votesCount[survey._id] : survey.votesCount"
+                    />
                 </div>
             </div>
             <div class="flex justify-center">
