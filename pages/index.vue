@@ -37,7 +37,7 @@
 <script lang="ts" setup>
     import type { SurveysGetRequest, VotesCountGetRequest } from "~/types/api";
     import { PER_PAGE, TIMER_INTERVAL } from "~/data/constants";
-    import { debounce } from 'lodash';
+    import debounce from 'lodash';
 
     const route = useRoute()
     const router = useRouter()
