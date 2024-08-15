@@ -41,7 +41,7 @@
 
     const route = useRoute()
     const router = useRouter()
-    const name = ref("");
+    const name = ref(route.query.name);
     const query = computed(() => ({ 
         page: route.query.page, 
         per_page: PER_PAGE, 

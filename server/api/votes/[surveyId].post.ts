@@ -14,6 +14,13 @@ export default defineEventHandler(async (event) => {
                 statusMessage: 'This survey is arleady submitted.'
             });
         }
+
+        if (body.questions.length > body.answers.length) {
+            return createError({
+                statusCode: 400,
+                statusMessage: 'Please select all answers.'
+            });
+        }
        
         body.answers.forEach(async (answer: { questionId: string, name: string, answerId: string }) => {
             const newVote = new Vote({ 
@@ -24,8 +31,6 @@ export default defineEventHandler(async (event) => {
             });
             await newVote.save();
         });
-
-        return { status: "OK" };
     } catch (err) {
         console.error(err);
     }

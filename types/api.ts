@@ -4,6 +4,16 @@ type Pagination = {
     totalPages: number,
 }
 
+type Summary = {
+    id: string;
+    question: string;
+    votes: {
+        id: string;
+        name: string;
+        votesCount: number;
+    }[];
+}
+
 export type SurveysPostRequest = {
     id: string;
 }
@@ -29,6 +39,7 @@ export type Survey = {
     name: string;
     closed_at: Date|null;
     status: string;
+    created_at: Date|null;
 }
 
 export type QuestionAnswer = {
@@ -45,6 +56,8 @@ export type Question = {
 export type SurveyIdGetRequest = {
     survey: Survey;
     questions: Question[];
+    summary: Summary;
+    totalVotes: number;
 }
 
 export type VotesCountGetRequest = {

@@ -17,4 +17,5 @@ export const Survey = defineMongooseModel({
         default: 'active',
     }
   },
+  timestamps: true,
 })
