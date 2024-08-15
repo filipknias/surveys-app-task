@@ -77,6 +77,8 @@
         },
     });
 
+    useHead({ title: "Vote for survey" });
+
     async function onSubmit() {
         try {
             success.value = false;

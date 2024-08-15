@@ -87,6 +87,8 @@
     const loading = ref<boolean>(false);
     const error = ref<RequestFail|null>(null);
 
+    useHead({ title: "Create new survey" });
+
     async function onSubmit() {
         try {
             loading.value = true;

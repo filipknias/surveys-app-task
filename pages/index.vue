@@ -50,6 +50,8 @@
     const timer = ref<NodeJS.Timeout|null>(null);
     const votesCount = ref<Record<string, number>>({});
 
+    useHead({ title: "Surveys List" });
+
     const { data, error } = await useFetch<SurveysGetRequest>('/api/surveys', {
         key: 'surveys',
         query, 
