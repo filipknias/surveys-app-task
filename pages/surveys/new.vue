@@ -66,7 +66,7 @@
         </div>
         <div v-if="error" class="bg-red-200 rounded-lg px-8 py-4 mb-8">
             <h1 class="text-red-500 text-xl">
-                {{ error.statusMessage }} ({{ error.statusCode }}). Please try again
+                {{ error.message }} ({{ error.statusCode }}). Please try again
             </h1>
         </div>
         <div class="flex flex-wrap gap-4">
@@ -79,26 +79,10 @@
 
 <script lang="ts" setup>
     import { nanoid } from 'nanoid';
+    import { INITIAL_QUESTIONS } from '~/data/constants';
     import type { SurveysPostRequest, RequestFail, Question } from '~/types/api'
 
-    const initialQuestions = [
-        { 
-            id: nanoid(), 
-            name: "",
-            answers: [{ id: nanoid(), name: "" }],
-        },
-        { 
-            id: nanoid(), 
-            name: "",
-            answers: [{ id: nanoid(), name: "" }],
-        },
-        { 
-            id: nanoid(), 
-            name: "",
-            answers: [{ id: nanoid(), name: "" }],
-        },
-    ];
-    const questions = ref<Question[]>(initialQuestions);
+    const questions = ref<Question[]>(INITIAL_QUESTIONS);
     const name = ref<string>("");
     const loading = ref<boolean>(false);
     const error = ref<RequestFail|null>(null);

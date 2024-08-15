@@ -2,7 +2,12 @@
   <div>
     <div class="flex justify-between items-center gap-4 flex-wrap mb-12">
         <h1 class="text-4xl font-semibold">{{ data.survey.name }}</h1>
-        <div :class="statusBadgeBackground" class="text-white py-2 px-4 rounded-lg">{{ data.survey.status }}</div>
+        <div 
+            :class="{ 'bg-green-500': data.survey.status === 'active', 'bg-red-500': data.survey.status === 'closed'  }" 
+            class="text-white py-2 px-4 rounded-lg"
+        >
+            {{ data.survey.status }}
+        </div>
     </div>
     <div v-if="error" class="bg-red-200 rounded-lg px-8 py-4 mb-8">
         <h3 class="text-red-800 text-lg">{{ error.data.statusMessage }}</h3>
@@ -27,32 +32,44 @@
                 </div>
             </div>
         </div>
-        <button :disabled="postStatus === ''" type="submit" class="bg-blue-500 hover:bg-blue-600 transition duration-200 text-white text-center rounded-lg px-8 py-2 disabled:bg-opacity-50">Submit answers</button>
+        <button :disabled="loading" type="submit" class="bg-blue-500 hover:bg-blue-600 transition duration-200 text-white text-center rounded-lg px-8 py-2 disabled:bg-opacity-50">Submit answers</button>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-    import type { SurveyIdGetRequest } from "~/types/api";
+    import type { RequestFail, Survey, SurveysGetRequest } from "~/types/api";
 
     const route = useRoute();
     const checkedAnswers = ref<{ questionId: string, name: string, answerId: string }[]>([]);
+    const loading = ref<boolean>(false);
+    const error = ref<RequestFail|null>(null);
 
-    const { data, status } = await useFetch<SurveyIdGetRequest>(`/api/surveys/${route.params.id}`);
+    const { data: cachedSurveys } = useNuxtData<SurveysGetRequest>('surveys');
 
-    const statusBadgeBackground = reactive({
-        'bg-green-500': data.value?.survey.status === "active",
-    });
-
-    const { execute, status: postStatus, error, data: votesData } = await useFetch(`/api/votes/${route.params.id}`, {
-        immediate: false,
-        method: "POST",
-        body: {
-            answers: checkedAnswers.value,
+    const { data } = await useFetch(`/api/surveys/${route.params.id}`, {
+        key: `survey-${route.params.id}`,
+        default() { 
+            if (cachedSurveys.value) {
+                return cachedSurveys.value.surveys.find((survey: Survey) => survey._id === route.params.id);
+            }
         },
     });
 
     async function onSubmit() {
-        execute();
+        try {
+            loading.value = true;
+            await $fetch(`/api/votes/${route.params.id}`, {
+                method: 'POST',
+                body: {
+                    answers: checkedAnswers.value,
+                }
+            });
+        } catch (err) {
+            const serverError = err as RequestFail;
+            error.value = serverError;
+        } finally {
+            loading.value = false;
+        }
     }
 </script>

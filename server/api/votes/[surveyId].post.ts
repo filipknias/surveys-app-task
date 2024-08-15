@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
                 statusMessage: 'This survey is arleady submitted.'
             });
         }
-
+       
         body.answers.forEach(async (answer: { questionId: string, name: string, answerId: string }) => {
             const newVote = new Vote({ 
                 answer_id: answer.answerId,

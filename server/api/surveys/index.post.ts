@@ -1,6 +1,6 @@
 import { Answer } from "~/server/models/Answer";
 import { Question } from "~/server/models/Question";
-import type { Question as QuestionType, QuestionAnswer } from "~/types/surveys";
+import type { Question as QuestionType, QuestionAnswer } from "~/types/api";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
             });
             await newQuestion.save();
 
-            question.answers.forEach(async (answer) => {
+            question.answers.forEach(async (answer: QuestionAnswer) => {
                 const newAnswer = new Answer({ 
                     name: answer.name,
                     survey_id: newSurvey._id,

@@ -9,7 +9,7 @@ export type SurveysPostRequest = {
 }
 
 export type SurveysGetRequest = {
-   surveys: Survey[];
+   surveys: ({ votesCount: number } & Survey)[];
    pagination: Pagination;
 }
 
@@ -27,7 +27,6 @@ export type RequestFail = {
 export type Survey = {
     _id: string;
     name: string;
-    answers: { id: string; name: string }[];
     closed_at: Date|null;
     status: string;
 }
@@ -46,4 +45,11 @@ export type Question = {
 export type SurveyIdGetRequest = {
     survey: Survey;
     questions: Question[];
+}
+
+export type VotesCountGetRequest = {
+    votes: {
+        surveyId: string;
+        votesCount: number;
+    }[];
 }
