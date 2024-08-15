@@ -37,7 +37,7 @@
 <script lang="ts" setup>
     import type { SurveysGetRequest, VotesCountGetRequest } from "~/types/api";
     import { PER_PAGE, TIMER_INTERVAL } from "~/data/constants";
-    import debounce from 'lodash';
+    import lodash from 'lodash';
 
     const route = useRoute()
     const router = useRouter()
@@ -79,8 +79,9 @@
         });
     }
 
-    watch(name, debounce(async () => {
-        if (name.value.trim().length !== 0) {
+    watch(name, lodash.debounce(async () => {
+        const nameValue = name.value as string;
+        if (nameValue.trim().length !== 0) {
             await navigateTo({ 
                 path: "/", 
                 query: { name: name.value },
